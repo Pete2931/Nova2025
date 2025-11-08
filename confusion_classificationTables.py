@@ -5,6 +5,20 @@ import pandas as pd
 cm = pd.read_csv("confusion_matrix.csv", index_col=0)
 cr = pd.read_csv("classification_report.csv", index_col=0)
 
+# Rename columns and rows for confusion matrix
+rename_map = {
+    "Pred_0": "Pred_Normal",
+    "Pred_1": "Pred_Suspect",
+    "Pred_2": "Pred_Pathological",
+    "Actual_0": "Actual_Normal",
+    "Actual_1": "Actual_Suspect",
+    "Actual_2": "Actual_Pathological",
+}
+
+cm.rename(columns=rename_map, inplace=True)
+cm.rename(index=rename_map, inplace=True)
+
+
 # Convert numeric columns
 cr = cr.apply(pd.to_numeric, errors="ignore")
 
