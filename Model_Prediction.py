@@ -18,14 +18,13 @@ def transfrom_dataframe(df):
 def prediction(data):
     model = XGBClassifier()
     model_path = "xgb_model.json"
-    model.load(model_path)
+    model.load_model(model_path)
     return model.predict(data)[0]
 
 #For front_end to call to: returns Normal, Suspected, Pathological
-def get_prediction(df):
+def word_predction(pred):
     code = ['Normal','Suspect','Pathological']
-    res = prediction(transfrom_dataframe(df))
-    return code[res]
+    return code[pred]
 
 #Function encodes an image to base 64
 def encode_image_to_base64(image_path):
@@ -77,4 +76,12 @@ def llm_explanation(df,pred):
     }
 
     response = requests.post(url, headers=headers,json=payload)
-    print(response.json())
+    res = response.json()
+    return res['choices'][0]['message']['content']
+
+
+# Returns both the prediction in words and the llm explanation as for why
+def get_pred_exp(df):
+    pred = prediction(transfrom_dataframe(df))
+    explanation = llm_explanation(df,pred)
+    return word_predction(pred), explanation
