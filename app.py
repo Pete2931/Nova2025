@@ -29,11 +29,11 @@ with col2:
     st.write("Normal")
 
     # Statistics 
-    st.header("Statistics: ")
+    st.header("Model Statistics: ")
     cc1, cc2 = st.columns(2)
     
     with cc1: 
-        st.subheader("Model Accuracy:")
+        st.write("Accuracy: 94.6%")
     
     with cc2: 
         st.subheader("Confusion Matrix")
