@@ -68,5 +68,13 @@ def llm_explanation(df,pred):
         ]
 
     }
+    
+    ]
 
-]   
+    payload = {
+    "model": "anthropic/claude-sonnet-4.5",
+    "messages": messages
+    }
+
+    response = requests.post(url, headers=headers,json=payload)
+    print(response.json())
