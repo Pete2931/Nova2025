@@ -31,3 +31,50 @@ def get_prediction(df):
 def encode_image_to_base64(image_path):
     with open(image_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode('utf-8')
+
+#Get an LLM explanation for the result, !!! input has to be in {0,1,2} !!!
+def llm_explanation(df,pred):
+    result = "\n".join([f"{col}: {df[col].values[0]}" for col in df.columns])
+
+    url = "https://openrouter.ai/api/v1/chat/completions"
+
+    headers = {
+        "Authorization": f"Bearer {openrouter_api_key}",
+        "Content-Type": "application/json"
+    }
+    # Read and encode the image
+    image_path = "shap_beeswarm.jpg"
+    base64_image = encode_image_to_base64(image_path)
+    data_url = f"data:image/jpeg;base64,{base64_image}"
+
+    messages = [
+
+    {
+        "role": "user",
+        "content": [
+            {
+                "type": "text",
+                "text": f"""The prediction given from an xgboost model with these shap 
+                            values is {pred} based off of these inputs: {result}. 
+                            Please explain in medical terms as to the possible reasons 
+                            the model predicted the condition of the fetus."""
+            },
+
+            {
+                "type": "image_url",
+                "image_url": {"url": data_url}
+            }
+
+        ]
+
+    }
+    
+    ]
+
+    payload = {
+    "model": "anthropic/claude-sonnet-4.5",
+    "messages": messages
+    }
+
+    response = requests.post(url, headers=headers,json=payload)
+    print(response.json())
