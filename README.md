@@ -1,5 +1,14 @@
 # Nova2025
 
+#Instructions for how to use:
+Welcome to fetal prediction! To use this dashboard, first input all the data from the ctg into the respective columns on the left. Then on the right you can see the top five features that contribute to the prediction, the predicted fetal health,
+and the correlation matrix.
+
+Colors:
+#B66681
+#FFFFFF
+#F0E2E2
+
 # Dataset Column names and meanings
 
     'baseline value'- FHR baseline (beats per minute)
