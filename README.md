@@ -1,5 +1,13 @@
 # Nova2025
 
+# Library Version Requirements
+- pandas>=1.5.0
+- scikit-learn>=1.1.0
+- xgboost>=1.6.0
+- numpy>=1.23.0
+- scipy>=1.8.0
+
+
 # Dataset Column names and meanings
 
     'baseline value'- FHR baseline (beats per minute)
@@ -24,6 +32,6 @@
     'histogram_variance'- Histogram variance
     'histogram_tendency'- Histogram tendency
 
-Target
+## Target
 
     'fetal_health' Tagged as 1 (Normal), 2 (Suspect) and 3 (Pathological)
