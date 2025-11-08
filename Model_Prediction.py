@@ -42,7 +42,7 @@ def llm_explanation(df,pred):
         "Content-Type": "application/json"
     }
     # Read and encode the image
-    image_path = "shap_beeswarm.jpg"
+    image_path = "shap_beeswarm_wide.jpg"
     base64_image = encode_image_to_base64(image_path)
     data_url = f"data:image/jpeg;base64,{base64_image}"
 
