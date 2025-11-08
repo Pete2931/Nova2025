@@ -56,7 +56,8 @@ def llm_explanation(df,pred):
                 "text": f"""The prediction given from an xgboost model with these shap 
                             values is {pred} based off of these inputs: {result}. 
                             Please explain in medical terms as to the possible reasons 
-                            the model predicted the condition of the fetus."""
+                            the model predicted the condition of the fetus. The prediction of 0 means
+                            normal, 1 means suspect, and 2 means pathological."""
             },
 
             {

@@ -8,5 +8,4 @@ data = {
 
 df = pd.DataFrame(data)
 
-print(mp.get_prediction(df))
-print(mp.llm_explanation(df,2))
+print(mp.get_pred_exp(df))
