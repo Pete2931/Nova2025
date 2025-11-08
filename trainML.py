@@ -1,3 +1,5 @@
+import json
+
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split, RandomizedSearchCV, StratifiedKFold
@@ -94,3 +96,35 @@ best_model.save_model("xgb_model.json")
 explainer = shap.Explainer(best_model.predict, X)
 shap_values = explainer(X)
 shap.plots.beeswarm(shap_values)
+
+feat_names = [c.replace('_', ' ') for c in X.columns]  # shorter labels (optional)
+
+
+shap.summary_plot(
+    shap_values,             # or shap_values[<class_idx>] for a single class
+    X,                       # use the same matrix you explained
+    feature_names=feat_names,
+    max_display=10,          # keep your top-10 summary
+    show=False,
+    plot_size=(18, 6)        # ← wider figure (try 20 if needed)
+)
+plt.savefig("shap_beeswarm_wide.jpg", dpi=300, bbox_inches='tight')
+plt.close()
+
+
+# --- Confusion Matrix ---
+cm = confusion_matrix(y_test_orig, y_pred_orig)
+
+# Convert to DataFrame (optional: label rows/cols with class names)
+cm_df = pd.DataFrame(
+    cm,
+    index=[f"Actual_{cls}" for cls in le.classes_],
+    columns=[f"Pred_{cls}" for cls in le.classes_]
+)
+cm_df.to_csv("confusion_matrix.csv", index=True)
+
+# --- Classification Report ---
+report = classification_report(y_test_orig, y_pred_orig, digits=3, output_dict=True)
+report_df = pd.DataFrame(report).transpose()
+report_df.to_csv("classification_report.csv", index=True)
+
